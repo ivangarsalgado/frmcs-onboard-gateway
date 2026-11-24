@@ -1,0 +1,70 @@
+
+services:
+
+  # Base de datos de abonados 5G
+  mongodb:
+    image: mongo:7
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - 5g-net
+
+  # Open5GS - Access and Mobility Management
+  amf:
+    build: ./core-open5gs
+    image: frmcs-open5gs:latest
+    command: open5gs-amfd -c /etc/open5gs/amf.yaml
+    networks:
+      5g-net:
+        ipv4_address: 172.25.0.10
+
+  # Open5GS - Session Management
+  smf:
+    image: frmcs-open5gs:latest
+    command: open5gs-smfd -c /etc/open5gs/smf.yaml
+    networks:
+      5g-net:
+        ipv4_address: 172.25.0.11
+
+  # Open5GS - User Plane
+  upf:
+    image: frmcs-open5gs:latest
+    command: open5gs-upfd -c /etc/open5gs/upf.yaml
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    networks:
+      5g-net:
+        ipv4_address: 172.25.0.12
+
+  # UERANSIM - Estacion base
+  gnb:
+    build: ./client-ueransim
+    image: frmcs-ueransim:latest
+    command: ./build/nr-gnb -c config/open5gs-gnb.yaml
+    networks:
+      5g-net:
+        ipv4_address: 172.25.0.20
+
+  # UERANSIM - Modem 5G
+  ue:
+    image: frmcs-ueransim:latest
+    command: ./build/nr-ue -c config/open5gs-ue.yaml
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    networks:
+      5g-net:
+        ipv4_address: 172.25.0.21
+
+volumes:
+  mongo-data:
+
+networks:
+  5g-net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.25.0.0/24
