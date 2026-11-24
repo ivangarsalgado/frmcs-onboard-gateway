@@ -11,19 +11,19 @@ global:
 smf:
   sbi:
     server:
-      - address: 127.0.0.4
+      - address: 172.25.0.11
         port: 7777
     client:
-#      nrf:
-#        - uri: http://127.0.0.10:7777
-      scp:
-        - uri: http://127.0.0.200:7777
+      nrf:
+        - uri: http://172.25.0.14:7777
+      # scp:
+      #   - uri: http://127.0.0.200:7777
   pfcp:
     server:
-      - address: 127.0.0.4
+      - address: 172.25.0.11
     client:
       upf:
-        - address: 127.0.0.7
+        - address: 172.25.0.12
   gtpc:
     server:
       - address: 127.0.0.4
