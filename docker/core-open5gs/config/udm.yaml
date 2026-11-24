@@ -30,13 +30,11 @@ udm:
       key: /etc/open5gs/hnet/secp256r1-6.key
   sbi:
     server:
-      - address: 127.0.0.12
+      - address: 172.25.0.16
         port: 7777
     client:
-#      nrf:
-#        - uri: http://127.0.0.10:7777
-      scp:
-        - uri: http://127.0.0.200:7777
+      nrf:
+        - uri: http://172.25.0.14:7777
 
 ################################################################################
 # Home Network Public Key

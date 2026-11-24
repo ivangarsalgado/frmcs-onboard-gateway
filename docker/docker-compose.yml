@@ -54,6 +54,43 @@ services:
     volumes:
       - ./core-open5gs/config/nrf.yaml:/etc/open5gs/nrf.yaml:ro
 
+  # Open5GS - Authentication Server Function
+  ausf:
+    image: frmcs-open5gs:latest
+    command: open5gs-ausfd -c /etc/open5gs/ausf.yaml
+    depends_on:
+      - nrf
+    networks:
+      5g-net:
+        ipv4_address: 172.25.0.15
+    volumes:
+      - ./core-open5gs/config/ausf.yaml:/etc/open5gs/ausf.yaml:ro
+
+  # Open5GS - Unified Data Management
+  udm:
+    image: frmcs-open5gs:latest
+    command: open5gs-udmd -c /etc/open5gs/udm.yaml
+    depends_on:
+      - nrf
+    networks:
+      5g-net:
+        ipv4_address: 172.25.0.16
+    volumes:
+      - ./core-open5gs/config/udm.yaml:/etc/open5gs/udm.yaml:ro
+
+  # Open5GS - Unified Data Repository
+  udr:
+    image: frmcs-open5gs:latest
+    command: open5gs-udrd -c /etc/open5gs/udr.yaml
+    depends_on:
+      - nrf
+      - mongodb
+    networks:
+      5g-net:
+        ipv4_address: 172.25.0.17
+    volumes:
+      - ./core-open5gs/config/udr.yaml:/etc/open5gs/udr.yaml:ro
+
   # UERANSIM - Estacion base
   gnb:
     build: ./client-ueransim
