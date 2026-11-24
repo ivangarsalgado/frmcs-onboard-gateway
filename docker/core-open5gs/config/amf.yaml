@@ -11,7 +11,7 @@ global:
 amf:
   sbi:
     server:
-      - address: 127.0.0.5
+      - address: 172.25.0.10
         port: 7777
     client:
 #      nrf:
@@ -20,7 +20,7 @@ amf:
         - uri: http://127.0.0.200:7777
   ngap:
     server:
-      - address: 127.0.0.5
+      - address: 172.25.0.10
   metrics:
     server:
       - address: 127.0.0.5

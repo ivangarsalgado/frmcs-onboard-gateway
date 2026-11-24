@@ -17,6 +17,8 @@ services:
     networks:
       5g-net:
         ipv4_address: 172.25.0.10
+    volumes:
+      - ./core-open5gs/config/amf.yaml:/etc/open5gs/amf.yaml:ro
 
   # Open5GS - Session Management
   smf:
@@ -46,6 +48,8 @@ services:
     networks:
       5g-net:
         ipv4_address: 172.25.0.20
+    volumes:
+      - ./client-ueransim/config/open5gs-gnb.yaml:/ueransim/config/open5gs-gnb.yaml:ro
 
   # UERANSIM - Modem 5G
   ue:
