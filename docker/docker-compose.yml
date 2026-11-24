@@ -39,6 +39,16 @@ services:
     networks:
       5g-net:
         ipv4_address: 172.25.0.12
+  
+  # Open5GS - NRF
+  nrf:
+    image: frmcs-open5gs:latest
+    command: "open5gs-nrfd -c /etc/open5gs/nrf.yaml"
+    volumes:
+      - ./core-open5gs/config/nrf.yaml:/etc/open5gs/nrf.yaml:ro
+    networks:
+      5g-net:
+        ipv4_address: 172.25.0.14
 
   # UERANSIM - Estacion base
   gnb:
