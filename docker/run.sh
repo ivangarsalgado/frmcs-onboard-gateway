@@ -11,7 +11,7 @@ echo "Checking Docker Compose..."
 
 if docker compose config --quiet; then
     echo "Compose is valid. Building images..."
-    docker compose build
+    docker compose build --no-cache
 
     echo "Starting containers..."
     docker compose up -d
